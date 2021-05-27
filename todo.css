@@ -39,3 +39,6 @@ h1,h3{
 	text-decoration: line-through;
     
 }
+.edit{
+    display: none;
+}
