@@ -1,7 +1,8 @@
   const add= document.querySelector(".add");
   const input = document.querySelector(".newtodo"); 
   const todoList = document.querySelector(".todo");
-const check = document.querySelectorAll(".check");
+const check = document.querySelectorAll("input[name=checkbox");
+console.log(check);
   showTasks();
   add.onclick = ()=>{ 
     let Value=input.value;
@@ -11,8 +12,9 @@ const check = document.querySelectorAll(".check");
   }else{
     listArray = JSON.parse(getLSData);  //transforming json string into a js object
   }
-  let obj ={ 'task':Value,'status':'done' } ;
+  let obj ={ 'task':Value,'status':'pending' } ;
   listArray.push(obj) //pushing or adding new value in array
+
   localStorage.setItem("NewTodo", JSON.stringify(listArray)); //transforming js object into a json string
   input.value="";
   showTasks(); 
@@ -28,10 +30,10 @@ function showTasks(){
   let newLiTag = "";
   listArray.forEach((element, index) => {
     if(element.status=="pending"){
-      newLiTag += `<li><input type="checkbox" class="check">${element.task}<button class="ui inverted red mini right floated button" onClick="deleteTask(${index})">DELETE</button><button class="ui inverted primary mini right floated button">EDIT</button></li >`;
+      newLiTag += `<li id="${index}"><input type="checkbox" id="checkbox${index}" onchange="change(${index})">${element.task}<button class="ui inverted red mini right floated button" onClick="deleteTask(${index})">DELETE</button><button class="ui inverted primary mini right floated button">EDIT</button></li >`;
     }
     else{
-      newLiTag += `<li class="done"><input type="checkbox" class="check" checked disbaled>${element.task}<button class="ui inverted red mini right floated button" onClick="deleteTask(${index})">DELETE</button>`;
+      newLiTag += `<li id="${index}"><input type="checkbox" class="check" checked id="checkbox${index}">${element.task}<button class="ui inverted red mini right floated button" onClick="deleteTask(${index})">DELETE</button>`;
     }
  
   });
@@ -43,4 +45,8 @@ function deleteTask(index){
   listArray.splice(index, 1); //delete or remove the li
   localStorage.setItem("NewTodo", JSON.stringify(listArray));
   showTasks(); //call the showTasks function
+}
+function change(id){
+var li = document.getElementById(id);
+li.classList.add("done");
 }
